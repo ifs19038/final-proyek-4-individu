@@ -1,0 +1,29 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.judul{
+  font-family: "Bubblegum Sans";
+}
+.classGeneral{
+  font-family: "Secular One";
+}
+#map { 
+  height: 60vh;
+  width: 100%;
+}
+.gambar_cuaca{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leaflet-popup-content-wrapper {
+  width: 100%;
+}
