@@ -15,10 +15,16 @@ function showPosition(position) {
 let input = document.querySelector('.input_text');
 let main = document.querySelector('#name');
 let temp = document.querySelector('.temp');
+let temp2 = document.querySelector('.temp2');
 let desc = document.querySelector('.desc');
+let desc2 = document.querySelector('.desc2');
 let wind = document.querySelector('.wind');
+let wind2 = document.querySelector('.wind2');
 let button= document.querySelector('.submit');
 let icon = document.querySelector('.icon');
+let humidity = document.querySelector('.humidity');
+let visibility = document.querySelector('.visibility');
+let pressure = document.querySelector('.pressure');
 
 
 button.addEventListener('click', function(name){
@@ -32,21 +38,40 @@ fetch('https://api.openweathermap.org/data/2.5/weather?q='+input.value+'&units=m
   let negaraValue = data['sys']['country']
   let descValue = data['weather'][0]['description'];
   let windValue = data['wind']['speed'];
-  let tempCelciusValue ;
+  // let tempCelciusValue ;
   // = tempValue - 273.15;
   let iconValue = data['weather'][0]['icon'];
+  let humidityValue = data ['main']['humidity'];
+  let visibilityValue = data['visibility'];
+  let pressureValue = data ['main']['pressure'];
+  let visibilityKmValue = visibilityValue / 1000;
+
 
   main.innerHTML = nameValue + ", " + negaraValue;
   desc.innerHTML = descValue;
+  desc2.innerHTML = descValue;
   temp.innerHTML = tempValue.toFixed(0) + "&deg" +"C";
-  wind.innerHTML = windValue + " km";
+  temp2.innerHTML = tempValue.toFixed(0) + "&deg" +"C";
+  wind.innerHTML = windValue.toFixed(0) +" km/h";
+  wind2.innerHTML = windValue.toFixed(0) +" km/h";
+  humidity.innerHTML = humidityValue + "%";
+  visibility.innerHTML = visibilityKmValue + " km";
+  pressure.innerHTML = pressureValue + " hPa";
   icon.src = "http://openweathermap.org/img/wn/" + iconValue + "@2x.png";
   input.value ="";
 
 })
 
-.catch(err => alert("Wrong city name!"));
+.catch(err => nameFalse());
 })
+
+function nameFalse(){
+  Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Nama kota yang anda masukkan tidak ditemukan',
+  })
+}
 
 function generateWeatherByLatLong(lat,long){
   fetch('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon=' + long + '&units=metric&appid=e90f275d13c352884256251aa2132b1a')
@@ -59,20 +84,30 @@ function generateWeatherByLatLong(lat,long){
   let negaraValue = data['sys']['country']
   let descValue = data['weather'][0]['description'];
   let windValue = data['wind']['speed'];
-  let tempCelciusValue ;
+  // let tempCelciusValue ;
   // = tempValue - 273.15;
   let iconValue = data['weather'][0]['icon'];
+  let humidityValue = data ['main']['humidity'];
+  let visibilityValue = data['visibility'];
+  let visibilityKmValue = visibilityValue / 1000;
+  let pressureValue = data ['main']['pressure'];
 
   main.innerHTML = nameValue + ", " + negaraValue;
   desc.innerHTML = descValue;
+  desc2.innerHTML = descValue;
   temp.innerHTML = tempValue.toFixed(0) + "&deg" +"C";
-  wind.innerHTML = windValue + " km";
+  temp2.innerHTML = tempValue.toFixed(0) + "&deg" +"C";
+  wind.innerHTML = windValue.toFixed(0) +" km/h";
+  wind2.innerHTML = windValue.toFixed(0) +" km/h";
+  humidity.innerHTML = humidityValue + "%";
+  visibility.innerHTML = visibilityKmValue + " km";
+  pressure.innerHTML = pressureValue + " hPa";
   icon.src = "http://openweathermap.org/img/wn/" + iconValue + "@2x.png";
   input.value ="";
 
 })
 
-.catch(err => alert("Wrong city name!"));
+.catch(err => nameFalse());
 }
 
 
@@ -92,7 +127,7 @@ var map = L.map('map', {
 // Create a Tile Layer and add it to the map
 var tiles = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-minZoom: '3'}).addTo(map);
+minZoom: '8'}).addTo(map);
 
 var marker = L.marker(
 [lat, long],
